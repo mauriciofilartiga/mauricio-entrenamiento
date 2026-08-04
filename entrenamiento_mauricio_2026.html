@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Entrenamiento Mauricio 2026</title>
+<style>
+:root{
+  --bg:#0b1020;--panel:#121a2f;--panel2:#18223d;--text:#eef3ff;--muted:#9eabc7;
+  --accent:#63e6be;--accent2:#74c0fc;--danger:#ff8787;--warn:#ffd43b;--ok:#69db7c;
+  --border:#2a3655;--shadow:0 10px 30px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#0a0f1d,#0d1426 45%,#0b1020);color:var(--text);
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4}
+header{position:sticky;top:0;z-index:20;background:rgba(11,16,32,.92);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--border);padding:12px 14px}
+.header-row{max-width:980px;margin:auto;display:flex;align-items:center;gap:10px;justify-content:space-between}
+h1{font-size:18px;margin:0}.sub{font-size:12px;color:var(--muted)}
+main{max-width:980px;margin:auto;padding:14px 14px 90px}
+nav{display:flex;gap:8px;overflow:auto;padding:8px 0 14px;scrollbar-width:none}
+nav button,.btn{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:10px 12px;
+border-radius:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+nav button.active,.btn.primary{background:var(--accent);color:#06241b;border-color:transparent}
+.btn.blue{background:var(--accent2);color:#06213a;border-color:transparent}
+.btn.danger{background:transparent;color:var(--danger);border-color:#6f3340}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.card{grid-column:span 12;background:linear-gradient(180deg,var(--panel),#11182b);border:1px solid var(--border);
+border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.card h2{font-size:17px;margin:0 0 12px}.card h3{font-size:15px;margin:12px 0 8px}
+.metric{display:flex;justify-content:space-between;align-items:end;gap:10px}
+.metric b{font-size:25px}.muted{color:var(--muted);font-size:13px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+label{font-size:12px;color:var(--muted);font-weight:700}
+input,select,textarea{width:100%;border:1px solid var(--border);background:#0d1426;color:var(--text);
+border-radius:11px;padding:11px 12px;font-size:16px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent2)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exercise{border-top:1px solid var(--border);padding:14px 0}
+.exercise:first-child{border-top:0;padding-top:0}
+.exercise-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.exercise-title{font-weight:800}.target{font-size:12px;color:var(--accent)}
+.sets{display:grid;grid-template-columns:86px 1fr;gap:8px;margin-top:9px}
+.sets input{text-align:center}
+.badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;
+background:#203152;color:#cfe1ff}
+.badge.ok{background:#173c31;color:#99f6d1}.badge.warn{background:#473d16;color:#ffe98a}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.summary .box{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:12px}
+.summary b{font-size:20px}
+.session-pill{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--border);
+border-radius:14px;margin:8px 0;background:var(--panel2)}
+.hidden{display:none!important}
+canvas{width:100%;height:220px;background:#0d1426;border-radius:14px;border:1px solid var(--border)}
+.notice{border-left:4px solid var(--accent2);padding:10px 12px;background:#111d34;border-radius:10px;font-size:13px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:24px}
+.fab{position:fixed;right:16px;bottom:18px;z-index:30;border:0;background:var(--accent);color:#06241b;
+font-weight:900;border-radius:999px;padding:14px 18px;box-shadow:var(--shadow)}
+@media(min-width:700px){
+  .half{grid-column:span 6}.third{grid-column:span 4}
+  h1{font-size:21px}
+}
+@media(max-width:520px){
+  .row,.row3{grid-template-columns:1fr}
+  .sets{grid-template-columns:78px 1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <div>
+      <h1>Entrenamiento Mauricio 2026</h1>
+      <div class="sub">Bloque de 12 semanas · hipertrofia + fuerza</div>
+    </div>
+    <span id="saveState" class="badge ok">Guardado</span>
+  </div>
+</header>
+
+<main>
+<nav id="tabs">
+  <button class="active" data-tab="hoy">Hoy</button>
+  <button data-tab="programa">Programa</button>
+  <button data-tab="progreso">Progreso</button>
+  <button data-tab="garmin">Garmin</button>
+  <button data-tab="datos">Datos</button>
+</nav>
+
+<section id="tab-hoy">
+  <div class="grid">
+    <article class="card half">
+      <h2>Control previo</h2>
+      <div class="row">
+        <div class="field"><label>Fecha</label><input id="date" type="date"></div>
+        <div class="field"><label>Peso antes de entrenar (kg)</label><input id="bodyWeight" type="number" step="0.1" placeholder="Cargá el peso de hoy"></div>
+      </div>
+      <div class="row3">
+        <div class="field"><label>Sueño (h)</label><input id="sleepHours" type="number" step="0.1" min="0" max="14"></div>
+        <div class="field"><label>Energía 1–10</label><input id="energy" type="number" min="1" max="10"></div>
+        <div class="field"><label>Dolor 0–10</label><input id="pain" type="number" min="0" max="10"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Deporte reciente</label>
+          <select id="sport"><option>Ninguno</option><option>Fútbol</option><option>Basket</option><option>Fútbol + Basket</option></select>
+        </div>
+        <div class="field"><label>Minutos</label><input id="sportMinutes" type="number" min="0" step="5"></div>
+      </div>
+      <div class="field"><label>Observaciones</label><textarea id="dailyNotes" rows="2" placeholder="Cuello, isquios, fatiga, molestias…"></textarea></div>
+    </article>
+
+    <article class="card half">
+      <h2>Sesión de hoy</h2>
+      <div class="field"><label>Seleccionar sesión</label>
+        <select id="sessionSelect"></select>
+      </div>
+      <div id="readiness" class="notice">Cargá sueño, energía, dolor y deporte para obtener una recomendación.</div>
+      <div class="summary" style="margin-top:12px">
+        <div class="box"><div class="muted">Semana</div><b id="weekNum">1</b></div>
+        <div class="box"><div class="muted">Fase</div><b id="phaseName">Hipertrofia</b></div>
+      </div>
+    </article>
+
+    <article class="card" id="workoutCard">
+      <div class="exercise-head">
+        <div><h2 id="sessionTitle">Sesión A</h2><div id="sessionGoal" class="muted"></div></div>
+        <button class="btn" id="clearSession">Limpiar</button>
+      </div>
+      <div id="exerciseList"></div>
+      <button class="btn primary" id="finishWorkout" style="width:100%;margin-top:10px">Guardar entrenamiento</button>
+    </article>
+  </div>
+</section>
+
+<section id="tab-programa" class="hidden">
+  <div class="grid">
+    <article class="card">
+      <h2>Programa rotativo 3–4 días</h2>
+      <div class="notice">No depende de días fijos: completá A → B → C → D. Si entrenás 3 días, continuá por la siguiente sesión la semana posterior.</div>
+      <div id="programList" style="margin-top:12px"></div>
+    </article>
+    <article class="card">
+      <h2>Periodización de 12 semanas</h2>
+      <div class="session-pill"><div><b>Semanas 1–4</b><div class="muted">Hipertrofia técnica</div></div><span class="badge">RIR 2–3</span></div>
+      <div class="session-pill"><div><b>Semanas 5–8</b><div class="muted">Fuerza + hipertrofia</div></div><span class="badge">RIR 1–2</span></div>
+      <div class="session-pill"><div><b>Semanas 9–11</b><div class="muted">Intensificación</div></div><span class="badge warn">RIR 1</span></div>
+      <div class="session-pill"><div><b>Semana 12</b><div class="muted">Deload y evaluación</div></div><span class="badge ok">−40% volumen</span></div>
+    </article>
+  </div>
+</section>
+
+<section id="tab-progreso" class="hidden">
+  <div class="grid">
+    <article class="card half">
+      <h2>Peso corporal</h2>
+      <canvas id="weightChart" width="700" height="300"></canvas>
+    </article>
+    <article class="card half">
+      <h2>Fuerza estimada</h2>
+      <canvas id="strengthChart" width="700" height="300"></canvas>
+    </article>
+    <article class="card">
+      <h2>Historial reciente</h2>
+      <div id="historyList"></div>
+    </article>
+  </div>
+</section>
+
+<section id="tab-garmin" class="hidden">
+  <div class="grid">
+    <article class="card half">
+      <h2>Datos Garmin manuales</h2>
+      <div class="row">
+        <div class="field"><label>VO₂ máx.</label><input id="vo2" type="number" step="0.1" value="39"></div>
+        <div class="field"><label>FC reposo</label><input id="rhr" type="number"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>HRV</label><input id="hrv" type="number"></div>
+        <div class="field"><label>Body Battery</label><input id="bodyBattery" type="number" min="0" max="100"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Respiración nocturna</label><input id="respRate" type="number" step="0.1" value="12"></div>
+        <div class="field"><label>FC mínima nocturna</label><input id="sleepHrMin" type="number" value="38"></div>
+      </div>
+      <button class="btn primary" id="saveGarmin">Guardar datos Garmin</button>
+    </article>
+    <article class="card half">
+      <h2>Importar archivo</h2>
+      <p class="muted">Acepta CSV genérico. La app intentará reconocer columnas como fecha, peso, sueño, VO₂, FC, HRV, pasos y Body Battery.</p>
+      <input id="garminFile" type="file" accept=".csv,.json">
+      <div id="importStatus" class="notice" style="margin-top:12px">Todavía no se importó ningún archivo.</div>
+    </article>
+    <article class="card">
+      <h2>Sincronización</h2>
+      <p class="muted">Esta versión funciona sin internet y guarda los datos en el navegador. No inicia sesión ni se conecta directamente a Garmin Connect. Podés importar exportaciones periódicas y, más adelante, agregar una integración mediante una API autorizada o un servicio intermedio.</p>
+    </article>
+  </div>
+</section>
+
+<section id="tab-datos" class="hidden">
+  <div class="grid">
+    <article class="card">
+      <h2>Respaldo y portabilidad</h2>
+      <div class="row">
+        <button class="btn blue" id="exportJson">Exportar JSON</button>
+        <button class="btn" id="exportCsv">Exportar CSV</button>
+      </div>
+      <div class="field" style="margin-top:12px"><label>Restaurar respaldo JSON</label><input id="importJson" type="file" accept=".json"></div>
+      <button class="btn danger" id="resetAll">Borrar todos los datos</button>
+    </article>
+  </div>
+</section>
+</main>
+
+<button class="fab" id="quickSave">Guardar</button>
+<footer>Los datos quedan guardados localmente en este dispositivo. Hacé respaldos periódicos.</footer>
+
+<script>
+const PROGRAM_START = '2026-08-04';
+
+const sessions = {
+ A:{name:'A · Upper fuerza',goal:'Fuerza de empuje y tirón, técnica limpia.',
+ exercises:[
+  {n:'Press banca',sets:4,target:'4–6 reps',load:92.5},
+  {n:'Dominadas lastradas',sets:3,target:'5–8 reps',load:6},
+  {n:'Press inclinado',sets:3,target:'8–10 reps',load:77},
+  {n:'Remo sentado / máquina',sets:3,target:'8–10 reps',load:70},
+  {n:'Press hombro con mancuernas',sets:3,target:'8–10 reps',load:22.5},
+  {n:'Face pull',sets:3,target:'12–15 reps',load:''},
+  {n:'Tríceps polea',sets:3,target:'10–12 reps',load:57.5},
+  {n:'Curl bíceps',sets:3,target:'8–12 reps',load:35}
+ ]},
+ B:{name:'B · Lower fuerza',goal:'Sentadilla, cadena posterior y fuerza global.',
+ exercises:[
+  {n:'Back squat',sets:4,target:'4–6 reps',load:105},
+  {n:'Peso muerto rumano',sets:3,target:'6–8 reps',load:70},
+  {n:'Prensa',sets:3,target:'8–10 reps',load:180},
+  {n:'Curl femoral',sets:3,target:'8–12 reps',load:50},
+  {n:'Gemelos',sets:3,target:'12–15 reps',load:65},
+  {n:'Abdominales',sets:3,target:'12–15 reps',load:''}
+ ]},
+ C:{name:'C · Upper hipertrofia',goal:'Volumen equilibrado de pecho, espalda, hombros y brazos.',
+ exercises:[
+  {n:'Press inclinado Smith',sets:4,target:'8–10 reps',load:27.5},
+  {n:'Remo T-Bar',sets:3,target:'8–12 reps',load:65},
+  {n:'Jalón al pecho',sets:3,target:'8–12 reps',load:73},
+  {n:'Press hombro con mancuernas',sets:3,target:'10–12 reps',load:20},
+  {n:'Elevaciones laterales',sets:3,target:'12–15 reps',load:15},
+  {n:'Posterior de hombro',sets:3,target:'12–15 reps',load:12.5},
+  {n:'Tríceps copa',sets:3,target:'10–15 reps',load:20},
+  {n:'Curl inclinado',sets:3,target:'10–12 reps',load:''}
+ ]},
+ D:{name:'D · Lower hipertrofia',goal:'Volumen de piernas con menor fatiga neural.',
+ exercises:[
+  {n:'Front squat / Hack squat',sets:4,target:'8–10 reps',load:65},
+  {n:'Peso muerto rumano',sets:3,target:'8–10 reps',load:70},
+  {n:'Prensa',sets:3,target:'10–12 reps',load:180},
+  {n:'Curl femoral',sets:3,target:'10–12 reps',load:73},
+  {n:'Zancadas caminando',sets:2,target:'10 por pierna',load:''},
+  {n:'Gemelos',sets:3,target:'12–15 reps',load:65},
+  {n:'Core',sets:3,target:'12–15 reps',load:''}
+ ]}
+};
+
+const state = JSON.parse(localStorage.getItem('mauricioTraining2026')||'{}');
+state.logs ??= [];
+state.garmin ??= [];
+state.nextSession ??= 'A';
+
+const $ = id => document.getElementById(id);
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function save(){
+ localStorage.setItem('mauricioTraining2026',JSON.stringify(state));
+ $('saveState').textContent='Guardado'; $('saveState').className='badge ok';
+}
+function dirty(){ $('saveState').textContent='Sin guardar'; $('saveState').className='badge warn'; }
+function weekInfo(dateStr){
+ const d0=new Date(PROGRAM_START+'T00:00:00'), d=new Date(dateStr+'T00:00:00');
+ const w=Math.max(1,Math.min(12,Math.floor((d-d0)/(7*864e5))+1));
+ const phase=w<=4?'Hipertrofia':w<=8?'Mixto':w<=11?'Intensificación':'Deload';
+ return {w,phase};
+}
+function setupTabs(){
+ document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+  document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));
+  $('tab-'+b.dataset.tab).classList.remove('hidden');
+  if(b.dataset.tab==='progreso') drawAll();
+ });
+}
+function renderSession(){
+ const key=$('sessionSelect').value, s=sessions[key];
+ $('sessionTitle').textContent=s.name; $('sessionGoal').textContent=s.goal;
+ $('exerciseList').innerHTML=s.exercises.map((e,i)=>`
+ <div class="exercise">
+  <div class="exercise-head"><div><div class="exercise-title">${i+1}. ${e.n}</div><div class="target">${e.target}</div></div><span class="badge">${e.sets} series</span></div>
+  <div class="sets">
+   <input type="number" step="0.1" id="load-${i}" placeholder="kg" value="${e.load}">
+   <input type="text" id="reps-${i}" placeholder="Ej.: 10-10-8">
+  </div>
+ </div>`).join('');
+}
+function renderProgram(){
+ $('programList').innerHTML=Object.entries(sessions).map(([k,s])=>`
+ <div class="session-pill"><div><b>${s.name}</b><div class="muted">${s.goal}</div></div><button class="btn" onclick="selectSession('${k}')">Abrir</button></div>`).join('');
+}
+window.selectSession=function(k){$('sessionSelect').value=k;renderSession();document.querySelector('[data-tab=hoy]').click()}
+function readiness(){
+ const e=+$('energy').value||0,p=+$('pain').value||0,sl=+$('sleepHours').value||0,sm=+$('sportMinutes').value||0;
+ let msg='Cargá sueño, energía, dolor y deporte para obtener una recomendación.',cls='notice';
+ if(e&&sl){
+  if(p>=6||e<=4||sl<5.5) msg='Recomendación: descarga o descanso. Evitá series al fallo y reducí 30–40% el volumen.';
+  else if(sm>=60||sl<6.5||e<=6) msg='Recomendación: mantené la sesión, pero dejá 2–3 repeticiones en reserva y reducí una serie en accesorios.';
+  else msg='Recomendación: sesión normal. Podés progresar si la técnica y la velocidad se mantienen.';
+ }
+ $('readiness').textContent=msg;
+}
+function collectDaily(){
+ return {date:$('date').value,weight:+$('bodyWeight').value||null,sleep:+$('sleepHours').value||null,
+ energy:+$('energy').value||null,pain:+$('pain').value||null,sport:$('sport').value,
+ sportMinutes:+$('sportMinutes').value||0,notes:$('dailyNotes').value};
+}
+function finishWorkout(){
+ const key=$('sessionSelect').value,s=sessions[key];
+ const exercises=s.exercises.map((e,i)=>({name:e.n,load:+$('load-'+i).value||0,reps:$('reps-'+i).value.trim()}));
+ const log={...collectDaily(),session:key,sessionName:s.name,exercises,createdAt:new Date().toISOString()};
+ state.logs.push(log);
+ const order=['A','B','C','D']; state.nextSession=order[(order.indexOf(key)+1)%4];
+ save(); alert('Entrenamiento guardado. Próxima sesión sugerida: '+sessions[state.nextSession].name);
+ renderHistory();
+}
+function renderHistory(){
+ const rows=[...state.logs].reverse().slice(0,12);
+ $('historyList').innerHTML=rows.length?rows.map(l=>`
+ <div class="session-pill"><div><b>${l.date} · ${l.sessionName}</b><div class="muted">${l.weight?l.weight+' kg · ':''}${l.exercises.map(e=>e.reps?e.name+' '+e.load+'kg '+e.reps:'').filter(Boolean).slice(0,2).join(' · ')}</div></div></div>`).join(''):'<div class="muted">Todavía no hay entrenamientos guardados.</div>';
+}
+function drawChart(canvas,points,labelFn){
+ const c=canvas,ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+ ctx.fillStyle='#0d1426';ctx.fillRect(0,0,W,H);
+ if(points.length<2){ctx.fillStyle='#9eabc7';ctx.font='24px system-ui';ctx.fillText('Faltan datos',24,50);return}
+ const vals=points.map(p=>p.v),min=Math.min(...vals),max=Math.max(...vals),pad=Math.max(1,(max-min)*.15);
+ const lo=min-pad,hi=max+pad;
+ ctx.strokeStyle='#2a3655';ctx.lineWidth=1;
+ for(let i=1;i<5;i++){let y=H*i/5;ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-15,y);ctx.stroke()}
+ ctx.strokeStyle='#63e6be';ctx.lineWidth=4;ctx.beginPath();
+ points.forEach((p,i)=>{let x=45+i*(W-70)/(points.length-1),y=H-30-(p.v-lo)*(H-55)/(hi-lo);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+ ctx.stroke();
+ ctx.fillStyle='#eef3ff';ctx.font='18px system-ui';ctx.fillText(labelFn(points.at(-1)),46,28);
+}
+function e1rm(load,reps){return load*(1+reps/30)}
+function drawAll(){
+ const weights=state.logs.filter(l=>l.weight).map(l=>({v:l.weight,date:l.date}));
+ drawChart($('weightChart'),weights,p=>'Último: '+p.v.toFixed(1)+' kg');
+ const strength=[];
+ state.logs.forEach(l=>{const ex=l.exercises?.find(e=>/press banca/i.test(e.name));if(ex&&ex.reps){const r=Math.max(...ex.reps.split('-').map(Number).filter(Boolean));strength.push({v:e1rm(ex.load,r),date:l.date})}});
+ drawChart($('strengthChart'),strength,p=>'1RM banca est.: '+p.v.toFixed(1)+' kg');
+ renderHistory();
+}
+function download(name,text,type){
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);
+}
+function exportCsv(){
+ const lines=['date,weight,sleep,energy,pain,sport,sport_minutes,session,exercise,load,reps'];
+ state.logs.forEach(l=>l.exercises.forEach(e=>lines.push([l.date,l.weight??'',l.sleep??'',l.energy??'',l.pain??'',l.sport,l.sportMinutes,l.session,`"${e.name}"`,e.load,`"${e.reps}"`].join(','))));
+ download('entrenamiento_mauricio.csv',lines.join('\n'),'text/csv');
+}
+function importGarmin(file){
+ const r=new FileReader();
+ r.onload=()=>{try{
+  if(file.name.endsWith('.json')){const x=JSON.parse(r.result);state.garmin=state.garmin.concat(Array.isArray(x)?x:[x]);}
+  else{
+   const rows=r.result.split(/\r?\n/).filter(Boolean),heads=rows.shift().split(',').map(h=>h.trim().toLowerCase());
+   rows.forEach(line=>{const v=line.split(',');let o={};heads.forEach((h,i)=>o[h]=v[i]);state.garmin.push(o)});
+  }
+  save();$('importStatus').textContent='Archivo importado: '+file.name+' · registros acumulados: '+state.garmin.length;
+ }catch(e){$('importStatus').textContent='No se pudo importar: '+e.message}}
+ r.readAsText(file);
+}
+function loadDailyDefaults(){
+ $('date').value=todayISO();
+ const last=[...state.logs].reverse().find(l=>l.weight);
+ if(last)$('bodyWeight').placeholder='Último: '+last.weight+' kg';
+}
+function init(){
+ setupTabs(); renderProgram(); loadDailyDefaults();
+ $('sessionSelect').innerHTML=Object.entries(sessions).map(([k,s])=>`<option value="${k}">${s.name}</option>`).join('');
+ $('sessionSelect').value=state.nextSession||'A'; renderSession();
+ const wi=weekInfo($('date').value);$('weekNum').textContent=wi.w;$('phaseName').textContent=wi.phase;
+ ['sleepHours','energy','pain','sportMinutes'].forEach(id=>$(id).addEventListener('input',readiness));
+ $('sport').addEventListener('change',readiness);
+ $('date').addEventListener('change',()=>{const x=weekInfo($('date').value);$('weekNum').textContent=x.w;$('phaseName').textContent=x.phase});
+ $('sessionSelect').onchange=renderSession;
+ $('finishWorkout').onclick=finishWorkout;
+ $('quickSave').onclick=()=>{state.draft=collectDaily();save()};
+ $('clearSession').onclick=()=>{if(confirm('¿Limpiar las cargas y repeticiones de esta sesión?'))renderSession()};
+ $('saveGarmin').onclick=()=>{state.garmin.push({date:$('date').value,vo2:+$('vo2').value||null,rhr:+$('rhr').value||null,hrv:+$('hrv').value||null,bodyBattery:+$('bodyBattery').value||null,respRate:+$('respRate').value||null,sleepHrMin:+$('sleepHrMin').value||null});save();alert('Datos Garmin guardados')};
+ $('garminFile').onchange=e=>e.target.files[0]&&importGarmin(e.target.files[0]);
+ $('exportJson').onclick=()=>download('respaldo_entrenamiento_mauricio.json',JSON.stringify(state,null,2),'application/json');
+ $('exportCsv').onclick=exportCsv;
+ $('importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{localStorage.setItem('mauricioTraining2026',r.result);location.reload()}catch(x){alert(x.message)}};r.readAsText(f)};
+ $('resetAll').onclick=()=>{if(confirm('Esto borrará todos los datos guardados en este navegador.')){localStorage.removeItem('mauricioTraining2026');location.reload()}};
+ document.addEventListener('input',dirty);
+ renderHistory();
+}
+init();
+</script>
+</body>
+</html>
