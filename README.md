@@ -1,1 +1,10 @@
-const V2='mfPerformanceV2',V1='mauricioTraining2026';export const base=()=>({version:2,logs:[],checkins:[],posture:[],garmin:[],nextSession:'A',migratedFromV1:false});export function load(){try{return {...base(),...JSON.parse(localStorage.getItem(V2)||'{}')}}catch{return base()}}export const save=s=>localStorage.setItem(V2,JSON.stringify(s));export function migrate(s){const raw=localStorage.getItem(V1);if(!raw)return [s,'No se detectaron datos locales de la versión 1.0.'];try{const old=JSON.parse(raw),seen=new Set(s.logs.map(x=>x.createdAt||`${x.date}-${x.session}`));for(const l of(old.logs||[])){const k=l.createdAt||`${l.date}-${l.session}`;if(!seen.has(k))s.logs.push(l)}s.garmin=[...(s.garmin||[]),...(old.garmin||[])];s.nextSession=old.nextSession||s.nextSession;s.migratedFromV1=true;return[s,`Migración completada: ${old.logs?.length||0} entrenamientos detectados.`]}catch(e){return[s,'No se pudo migrar: '+e.message]}}export function importAny(o){if(o?.version===2)return{...base(),...o};return{...base(),logs:o?.logs||[],garmin:o?.garmin||[],nextSession:o?.nextSession||'A',migratedFromV1:true}}
+# MF Performance 2.0
+
+1. Guardá el JSON de respaldo de la versión 1.0.
+2. Subí todo el contenido de esta carpeta a la raíz de tu repositorio.
+3. Conservá el nombre `index.html`.
+4. Publicá desde `main / root` en GitHub Pages.
+5. Abrí la misma URL que usabas antes.
+
+## Migración
+La app mantiene acceso a la clave anterior `mauricioTraining2026`, migra sus entrenamientos a `mfPerformanceV2` y también permite importar el respaldo JSON desde **Datos**. Para la migración automática, la versión 2 debe abrirse en exactamente el mismo dominio de GitHub Pages usado por la versión 1.
