@@ -1,10 +1,19 @@
-# MF Performance 2.0
+# MF Performance 2.1 — versión raíz
 
-1. Guardá el JSON de respaldo de la versión 1.0.
-2. Subí todo el contenido de esta carpeta a la raíz de tu repositorio.
-3. Conservá el nombre `index.html`.
-4. Publicá desde `main / root` en GitHub Pages.
-5. Abrí la misma URL que usabas antes.
+Esta versión usa **todos los archivos en la raíz del repositorio** para que puedas subirlos desde la interfaz web de GitHub sin crear carpetas.
 
-## Migración
-La app mantiene acceso a la clave anterior `mauricioTraining2026`, migra sus entrenamientos a `mfPerformanceV2` y también permite importar el respaldo JSON desde **Datos**. Para la migración automática, la versión 2 debe abrirse en exactamente el mismo dominio de GitHub Pages usado por la versión 1.
+Subí todos estos archivos:
+- index.html
+- styles.css
+- app.js
+- program.js
+- storage.js
+- charts.js
+- manifest.json
+- service-worker.js
+- icon-192.svg
+- icon-512.svg
+- README.md
+
+La versión mantiene la migración desde `mauricioTraining2026` y usa `mfPerformanceV2` para los nuevos datos.
+Publicala en la misma URL de GitHub Pages para conservar el acceso al almacenamiento local de Safari.
